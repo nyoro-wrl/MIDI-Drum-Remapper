@@ -7,13 +7,12 @@ def build():
     
     # Define build arguments
     args = [
-        'midi_drum_remapper_gui.py',  # Main script
-        '--name=MIDI Drum Remapper',  # Executable name
-        '--noconsole',                # Windowed mode (no console)
-        '--onefile',                  # Single EXE file
-        '--clean',                    # Clean cache
-        # Exclude mappings folder from bundling (we want it external)
-        # Note: We don't need explicit excludes usually, just don't include it.
+        'src/midi_drum_remapper_gui.py',  # Main script in src
+        '--name=MIDI Drum Remapper',      # Executable name
+        '--noconsole',                    # Windowed mode (no console)
+        '--onefile',                      # Single EXE file
+        '--clean',                        # Clean cache
+        # Exclude mappings folder from bundling
     ]
     
     # Add icon if available (placeholder logic)
@@ -25,8 +24,25 @@ def build():
     try:
         PyInstaller.__main__.run(args)
         print("\nBuild completed successfully!")
-        print("Executable is located in the 'dist' folder.")
-        print("IMPORTANT: Make sure to copy the 'mappings' folder next to the .exe file!")
+        
+        # Auto-copy assets
+        import shutil
+        
+        dist_dir = Path("dist")
+        mappings_src = Path("assets/mappings")
+        mappings_dst = dist_dir / "mappings"
+        
+        if mappings_src.exists():
+            print(f"Copying assets from {mappings_src} to {mappings_dst}...")
+            if mappings_dst.exists():
+                shutil.rmtree(mappings_dst)
+            shutil.copytree(mappings_src, mappings_dst)
+            print("Assets copied successfully.")
+        else:
+            print(f"Warning: Source mappings directory not found at {mappings_src}")
+
+        print("\nExecutable is located in the 'dist' folder.")
+        print("Required 'mappings' folder has been bundled next to the .exe file.")
     except Exception as e:
         print(f"\nBuild failed: {e}")
 

@@ -284,12 +284,12 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.setWindowTitle("MIDI Drum Remapper")
         self.setGeometry(100, 100, 400, 260)
         
-        # Config file path
         # Determine config file path
         if getattr(sys, 'frozen', False):
             base_path = Path(sys.executable).parent
         else:
-            base_path = Path(__file__).parent
+            # If running from src, keep config in project root for easier access
+            base_path = Path(__file__).parent.parent
             
         self.config_file = base_path / "config.json"
         

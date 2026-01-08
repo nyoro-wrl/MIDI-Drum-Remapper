@@ -25,12 +25,12 @@ class MappingLoader:
         if getattr(sys, 'frozen', False):
             # If frozen (PyInstaller), look in the same directory as the executable
             base_path = Path(sys.executable).parent
-        else:
-            # If script, look in the script's directory
-            base_path = Path(__file__).parent
-            
-        if not self.mappings_dir.is_absolute():
             self.mappings_dir = base_path / self.mappings_dir
+        else:
+            # If script, look in the assets directory (../assets relative to src)
+            # base_path is the project root
+            base_path = Path(__file__).parent.parent
+            self.mappings_dir = base_path / "assets" / self.mappings_dir
         
         if not self.mappings_dir.exists():
             try:
