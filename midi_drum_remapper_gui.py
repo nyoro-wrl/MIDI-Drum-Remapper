@@ -35,14 +35,35 @@ class RemappingThread(QThread):
     finished = Signal(list)
     error = Signal(str)
     
-    def __init__(self, files: List[Path], mapping_file: str, output_dir: str, auto_output: bool, suffix: str = "_remapped"):
+    def __init__(self, files: List[Path], mapping_file: str, output_template: str, default_suffix: str = "_remapped"):
         super().__init__()
         self.files = files
         self.mapping_file = mapping_file
-        self.output_dir = output_dir
-        self.auto_output = auto_output
-        self.suffix = suffix
-    
+        self.output_template = output_template
+        self.default_suffix = default_suffix
+
+    def build_output_path(self, input_file: Path) -> Path:
+        template = self.output_template.strip()
+        if not template:
+            return input_file.parent / f"{input_file.stem}{self.default_suffix}{input_file.suffix}"
+
+        placeholders = {
+            "{filename}": input_file.stem,
+            "{ext}": input_file.suffix,
+            "{input_dir}": str(input_file.parent)
+        }
+
+        if any(key in template for key in placeholders):
+            for key, value in placeholders.items():
+                template = template.replace(key, value)
+            return Path(template)
+
+        candidate = Path(template)
+        if candidate.suffix.lower() in [".mid", ".midi"]:
+            return candidate
+
+        return candidate / f"{input_file.stem}{self.default_suffix}{input_file.suffix}"
+
     def run(self):
         try:
             remapper = DrumMapRemapper(self.mapping_file)
@@ -51,12 +72,8 @@ class RemappingThread(QThread):
             
             for i, input_file in enumerate(self.files):
                 # Determine output path
-                if self.auto_output:
-                    output_file = input_file.parent / f"{input_file.stem}{self.suffix}{input_file.suffix}"
-                else:
-                    output_dir = Path(self.output_dir)
-                    output_file = output_dir / f"{input_file.stem}{self.suffix}{input_file.suffix}"
-                
+                output_file = self.build_output_path(input_file)
+
                 # Execute remapping
                 success = remapper.remap_midi_file(str(input_file), str(output_file))
                 
@@ -268,7 +285,7 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.setGeometry(100, 100, 400, 260)
         
         # Config file path
-        self.config_file = Path.home() / ".midi_drum_remapper_config.json"
+        self.config_file = Path(__file__).parent / "config.json"
         
         # Font settings
         self.default_font = ("Segoe UI", 9)
@@ -281,8 +298,8 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.mapping_display_names: List[str] = []
         self.is_converting = False
         self.remapping_thread: Optional[RemappingThread] = None
-        self.output_dir = ""
-        self.output_suffix = "_remapped"
+        self.output_template = ""
+        self.default_suffix = "_remapped"
         self.open_explorer = False
         self.settings_expanded = False
         
@@ -328,17 +345,12 @@ class MidiDrumRemapperGUI(QMainWindow):
         # Mapping selection
         self.mapping_combo = QComboBox()
         self.mapping_combo.setMinimumHeight(32)
-        main_layout.addWidget(self.mapping_combo)
-        
-        # Integrated file selection area
-        self.file_select_area = FileSelectArea()
-        self.file_select_area.files_selected.connect(self.on_files_selected)
-        main_layout.addWidget(self.file_select_area)
-        
+        main_layout.addWidget(self.mapping_combo)        
         # Output settings (collapsible)
-        self.settings_toggle_btn = QPushButton("⚙ Output Settings")
+        self.settings_toggle_btn = QPushButton("Output Settings ▽")
         self.settings_toggle_btn.setProperty("secondary", True)
-        self.settings_toggle_btn.setFixedHeight(24)
+        self.settings_toggle_btn.setMinimumHeight(28)
+        self.settings_toggle_btn.setStyleSheet("padding: 4px 10px;")
         self.settings_toggle_btn.clicked.connect(self.toggle_settings)
         main_layout.addWidget(self.settings_toggle_btn)
         
@@ -347,46 +359,40 @@ class MidiDrumRemapperGUI(QMainWindow):
         settings_layout = QVBoxLayout(self.settings_panel)
         settings_layout.setContentsMargins(0, 5, 0, 0)
         settings_layout.setSpacing(8)
-        
-        # Output directory
-        dir_layout = QHBoxLayout()
-        dir_layout.setSpacing(5)
-        dir_label = QLabel("Dir:")
-        dir_label.setStyleSheet("color: #9E9E9E; font-size: 8pt;")
-        dir_layout.addWidget(dir_label)
-        
-        self.output_dir_entry = QLineEdit()
-        self.output_dir_entry.setPlaceholderText("Same as input (leave empty)")
-        self.output_dir_entry.setMinimumHeight(24)
-        self.output_dir_entry.setStyleSheet("font-size: 8pt; padding: 4px 8px;")
-        dir_layout.addWidget(self.output_dir_entry, 1)
-        
-        dir_btn = QPushButton("...")
-        dir_btn.setFixedSize(24, 24)
-        dir_btn.clicked.connect(self.select_output_dir)
-        dir_layout.addWidget(dir_btn)
-        settings_layout.addLayout(dir_layout)
-        
-        # Output suffix
-        suffix_layout = QHBoxLayout()
-        suffix_layout.setSpacing(5)
-        suffix_label = QLabel("Suffix:")
-        suffix_label.setStyleSheet("color: #9E9E9E; font-size: 8pt;")
-        suffix_layout.addWidget(suffix_label)
-        
-        self.output_suffix_entry = QLineEdit("_remapped")
-        self.output_suffix_entry.setMinimumHeight(24)
-        self.output_suffix_entry.setStyleSheet("font-size: 8pt; padding: 4px 8px;")
-        suffix_layout.addWidget(self.output_suffix_entry, 1)
-        settings_layout.addLayout(suffix_layout)
-        
+        # Output template
+        template_layout = QHBoxLayout()
+        template_layout.setSpacing(5)
+        template_label = QLabel("Output:")
+        template_label.setStyleSheet("color: #9E9E9E; font-size: 8pt;")
+        template_layout.addWidget(template_label)
+
+        self.output_template_entry = QLineEdit()
+        self.output_template_entry.setPlaceholderText("C:\\out\\{filename}_remapped{ext}")
+        self.output_template_entry.setMinimumHeight(24)
+        self.output_template_entry.setStyleSheet("font-size: 8pt; padding: 4px 8px;")
+        template_layout.addWidget(self.output_template_entry, 1)
+
+        template_btn = QPushButton("Select")
+        template_btn.setFixedWidth(70)
+        template_btn.setProperty("secondary", True)
+        template_btn.clicked.connect(self.select_output_dir)
+        template_layout.addWidget(template_btn)
+        settings_layout.addLayout(template_layout)
+
         # Open explorer checkbox
         self.open_explorer_check = QCheckBox("Open folder after remapping")
-        self.open_explorer_check.setStyleSheet("font-size: 8pt; color: #9E9E9E;")
+        self.open_explorer_check.setStyleSheet("font-size: 9pt; color: #9E9E9E;")
         settings_layout.addWidget(self.open_explorer_check)
         
         main_layout.addWidget(self.settings_panel)
         self.settings_panel.hide()
+
+        
+        # Integrated file selection area
+        self.file_select_area = FileSelectArea()
+        self.file_select_area.files_selected.connect(self.on_files_selected)
+        main_layout.addWidget(self.file_select_area)
+
         
         # Add stretch to adjust layout
         main_layout.addStretch()
@@ -429,12 +435,12 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.settings_expanded = not self.settings_expanded
         if self.settings_expanded:
             self.settings_panel.show()
-            self.settings_toggle_btn.setText("⚙ Output Settings ▲")
-            self.setGeometry(self.x(), self.y(), 400, 360)
+            self.settings_toggle_btn.setText("Output Settings △")
+            self.setFixedHeight(360)
         else:
             self.settings_panel.hide()
-            self.settings_toggle_btn.setText("⚙ Output Settings")
-            self.setGeometry(self.x(), self.y(), 400, 260)
+            self.settings_toggle_btn.setText("Output Settings ▽")
+            self.setFixedHeight(260)
     
     def select_output_dir(self):
         """Output directory selection dialog"""
@@ -442,9 +448,9 @@ class MidiDrumRemapperGUI(QMainWindow):
             self,
             "Select output folder"
         )
-        
         if directory:
-            self.output_dir_entry.setText(directory)
+            template = Path(directory) / "{filename}{ext}"
+            self.output_template_entry.setText(str(template))
     
     def update_file_display(self):
         """Update file display"""
@@ -476,18 +482,14 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.is_converting = True
         
         # Get output settings
-        output_dir = self.output_dir_entry.text().strip()
-        suffix = self.output_suffix_entry.text().strip() or "_remapped"
-        self.output_suffix = suffix
-        self.output_dir = output_dir
+        output_template = self.output_template_entry.text().strip()
+        self.output_template = output_template
         
         # Start thread
         self.remapping_thread = RemappingThread(
             self.input_files,
             actual_mapping,
-            output_dir,
-            not bool(output_dir),  # Auto if no directory specified
-            suffix
+            output_template
         )
         self.remapping_thread.progress.connect(self.on_progress)
         self.remapping_thread.finished.connect(self.on_remapping_complete)
@@ -538,15 +540,22 @@ class MidiDrumRemapperGUI(QMainWindow):
                 if last_mapping and last_mapping in self.mapping_display_names:
                     index = self.mapping_display_names.index(last_mapping)
                     self.mapping_combo.setCurrentIndex(index)
-                
                 # Restore output settings
-                self.output_dir = config.get('output_dir', '')
-                if self.output_dir:
-                    self.output_dir_entry.setText(self.output_dir)
-                
-                self.output_suffix = config.get('output_suffix', '_remapped')
-                self.output_suffix_entry.setText(self.output_suffix)
-                
+                if 'output_template' in config:
+                    self.output_template = config['output_template']
+                else:
+                    legacy_dir = config.get('output_dir', '')
+                    legacy_suffix = config.get('output_suffix', '_remapped')
+                    if legacy_dir:
+                        self.output_template = str(Path(legacy_dir) / f"{{filename}}{legacy_suffix}{{ext}}")
+                    elif legacy_suffix:
+                        self.output_template = f"{{filename}}{legacy_suffix}{{ext}}"
+                    else:
+                        self.output_template = ''
+
+                if self.output_template:
+                    self.output_template_entry.setText(self.output_template)
+
                 self.open_explorer = config.get('open_explorer', False)
                 self.open_explorer_check.setChecked(self.open_explorer)
                 
@@ -558,8 +567,7 @@ class MidiDrumRemapperGUI(QMainWindow):
         try:
             config = {
                 'last_mapping': self.mapping_combo.currentText() if self.mapping_combo.currentIndex() >= 0 else "",
-                'output_dir': self.output_dir_entry.text().strip(),
-                'output_suffix': self.output_suffix_entry.text().strip() or "_remapped",
+                'output_template': self.output_template_entry.text().strip(),
                 'open_explorer': self.open_explorer_check.isChecked()
             }
             
@@ -592,6 +600,13 @@ class MidiDrumRemapperGUI(QMainWindow):
         if files:
             self.on_files_selected(files)
     
+    def keyPressEvent(self, event):
+        """Handle key press events"""
+        if event.key() == Qt.Key_Escape:
+            self.close()
+        else:
+            super().keyPressEvent(event)
+
     def closeEvent(self, event):
         """Window close handler"""
         self.save_config()
