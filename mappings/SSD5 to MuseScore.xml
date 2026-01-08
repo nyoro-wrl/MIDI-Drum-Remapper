@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Map>
+	<Note from="95" to="49"/>
+	<Note from="94" to="57"/>
+	<Note from="93" to="60"/>
+	<Note from="92" to="57"/>
+	<Note from="91" to="49"/>
+	<Note from="90" to="55"/>
+	<Note from="84" to="53"/>
+	<Note from="83" to="53"/>
+	<Note from="82" to="54"/>
+	<Note from="81" to="54"/>
+	<Note from="80" to="54"/>
+	<Note from="79" to="54"/>
+	<Note from="78" to="54"/>
+	<Note from="77" to="54"/>
+	<Note from="76" to="38"/>
+	<Note from="75" to="56"/>
+	<Note from="74" to="56"/>
+	<Note from="73" to="44"/>
+	<Note from="72" to="44"/>
+	<Note from="71" to="46"/>
+	<Note from="70" to="46"/>
+	<Note from="69" to="46"/>
+	<Note from="68" to="42"/>
+	<Note from="67" to="42"/>
+	<Note from="66" to="42"/>
+	<Note from="65" to="46"/>
+	<Note from="64" to="46"/>
+	<Note from="63" to="46"/>
+	<Note from="62" to="42"/>
+	<Note from="61" to="42"/>
+	<Note from="60" to="42"/>
+	<Note from="59" to="59"/>
+	<Note from="58" to="51" velocity="1"/>
+	<Note from="57" to="57"/>
+	<Note from="56" to="57" velocity="1"/>
+	<Note from="55" to="49"/>
+	<Note from="54" to="49" velocity="1"/>
+	<Note from="53" to="53"/>
+	<Note from="52" to="51"/>
+	<Note from="51" to="51"/>
+	<Note from="50" to="55"/>
+	<Note from="49" to="55" velocity="1"/>
+	<Note from="48" to="48"/>
+	<Note from="47" to="47"/>
+	<Note from="46" to="46"/>
+	<Note from="45" to="45"/>
+	<Note from="44" to="44"/>
+	<Note from="43" to="43"/>
+	<Note from="42" to="42"/>
+	<Note from="41" to="41"/>
+	<Note from="40" to="40"/>
+	<Note from="39" to="38"/>
+	<Note from="38" to="38"/>
+	<Note from="37" to="37"/>
+	<Note from="36" to="36"/>
+	<Note from="35" to="35"/>
+	<Note from="34" to="38"/>
+	<Note from="33" to="38"/>
+	<Note from="32" to="60" velocity="1"/>
+	<Note from="31" to="60"/>
+	<Note from="30" to="57" velocity="1"/>
+	<Note from="29" to="57"/>
+	<Note from="28" to="49"/>
+	<Note from="27" to="49" velocity="1"/>
+	<Note from="26" to="42"/>
+	<Note from="22" to="42"/>
+	<Note from="21" to="38"/>
+	<Note from="19" to="48"/>
+	<Note from="17" to="47"/>
+	<Note from="16" to="45"/>
+	<Note from="14" to="43"/>
+	<Note from="12" to="41"/>
+</Map>

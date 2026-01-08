@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Map>
+	<Note from="60" to="31"/>
+	<Note from="59" to="59"/>
+	<Note from="57" to="57"/>
+	<Note from="56" to="75"/>
+	<Note from="55" to="50"/>
+	<Note from="54" to="79"/>
+	<Note from="53" to="53"/>
+	<Note from="51" to="51"/>
+	<Note from="50" to="48"/>
+	<Note from="49" to="55"/>
+	<Note from="48" to="48"/>
+	<Note from="47" to="47"/>
+	<Note from="46" to="46"/>
+	<Note from="45" to="45"/>
+	<Note from="44" to="44"/>
+	<Note from="43" to="43"/>
+	<Note from="42" to="42"/>
+	<Note from="41" to="41"/>
+	<Note from="40" to="40"/>
+	<Note from="38" to="38"/>
+	<Note from="37" to="37"/>
+	<Note from="36" to="36"/>
+	<Note from="35" to="35"/>
+
+	<If velocity="1">
+		<Note from="60" to="32" velocity="64"/>
+		<Note from="57" to="56" velocity="64"/>
+		<Note from="55" to="49" velocity="64"/>
+		<Note from="51" to="58" velocity="64"/>
+		<Note from="49" to="54" velocity="64"/>
+	</If>
+</Map>
