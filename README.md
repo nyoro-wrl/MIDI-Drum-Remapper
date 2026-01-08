@@ -57,7 +57,3 @@ Currently provided mappings:
 - `MuseScore to SSD5.xml` - MuseScore to SSD5 remapping
 
 You can create custom mapping files to remap between other drum sources.
-
-## License
-
-MIT License
