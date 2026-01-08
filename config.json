@@ -1,5 +1,7 @@
 {
-  "last_mapping": "SSD5 to MuseScore",
-  "output_template": "C:\\Develop\\Python\\MIDI Drum Remapper\\{filename}_grerg{ext}",
-  "open_explorer": true
+  "last_mapping": "MuseScore to SSD5",
+  "filename_template": "{filename}_remap{ext}",
+  "output_dir": "",
+  "use_same_folder": true,
+  "open_explorer": false
 }

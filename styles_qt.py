@@ -79,6 +79,12 @@ QPushButton[secondary="true"]:hover {
     background-color: #616161;
 }
 
+QPushButton[secondary="true"]:disabled {
+    background-color: #2C2C2C;
+    color: #555555;
+    border: 1px solid #424242;
+}
+
 /* リストウィジェット */
 QListWidget {
     background-color: #1E1E1E;

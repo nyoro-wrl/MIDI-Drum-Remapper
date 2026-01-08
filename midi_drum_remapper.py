@@ -173,8 +173,8 @@ Examples:
     if args.output:
         output_path = Path(args.output)
     else:
-        # Auto-generate: original filename + "_remapped"
-        output_path = input_path.parent / f"{input_path.stem}_remapped{input_path.suffix}"
+        # Auto-generate: original filename + "_remap"
+        output_path = input_path.parent / f"{input_path.stem}_remap{input_path.suffix}"
     
     # Execute remapping
     print(f"Remapping: {input_path.name}")

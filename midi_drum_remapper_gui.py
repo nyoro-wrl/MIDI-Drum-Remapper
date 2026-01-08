@@ -35,7 +35,7 @@ class RemappingThread(QThread):
     finished = Signal(list)
     error = Signal(str)
     
-    def __init__(self, files: List[Path], mapping_file: str, output_template: str, default_suffix: str = "_remapped"):
+    def __init__(self, files: List[Path], mapping_file: str, output_template: str, default_suffix: str = "_remap"):
         super().__init__()
         self.files = files
         self.mapping_file = mapping_file
@@ -299,8 +299,10 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.is_converting = False
         self.remapping_thread: Optional[RemappingThread] = None
         self.output_template = ""
-        self.default_suffix = "_remapped"
-        self.open_explorer = False
+        self.output_dir = ""
+        self.use_same_folder = True  # Default: True
+        self.default_suffix = "_remap"
+        self.open_explorer = False # Default: False
         self.settings_expanded = False
         
         # Apply dark theme
@@ -320,6 +322,17 @@ class MidiDrumRemapperGUI(QMainWindow):
         
         # Load config
         self.load_config()
+        
+        # Set initial size and center
+        self.resize(500, 260)
+        self.center()
+    
+    def center(self):
+        """Center window on screen"""
+        qr = self.frameGeometry()
+        cp = self.screen().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
     
     def setup_sound(self):
         """Setup completion sound"""
@@ -359,29 +372,57 @@ class MidiDrumRemapperGUI(QMainWindow):
         settings_layout = QVBoxLayout(self.settings_panel)
         settings_layout.setContentsMargins(0, 5, 0, 0)
         settings_layout.setSpacing(8)
-        # Output template
+        
+        # 'Same as input' Checkbox
+        self.same_folder_check = QCheckBox("Output to same folder as input")
+        self.same_folder_check.setStyleSheet("font-size: 9pt; color: #E0E0E0;")
+        self.same_folder_check.setChecked(True) # Default True
+        self.same_folder_check.stateChanged.connect(self.toggle_output_controls)
+        settings_layout.addWidget(self.same_folder_check)
+        
+        # Output Directory Row
+        out_dir_layout = QHBoxLayout()
+        out_dir_layout.setSpacing(5)
+        
+        self.dir_label_title = QLabel("Output Dir:")
+        self.dir_label_title.setStyleSheet("color: #9E9E9E; font-size: 8pt;")
+        out_dir_layout.addWidget(self.dir_label_title)
+        
+        self.out_dir_val_label = QLabel("Select folder...")
+        self.out_dir_val_label.setStyleSheet("color: #BDBDBD; font-size: 8pt;") # Default style
+        out_dir_layout.addWidget(self.out_dir_val_label, 1)
+        
+        self.dir_btn = QPushButton("Select")
+        self.dir_btn.setMinimumWidth(80) # Changed to minimum width
+        self.dir_btn.setProperty("secondary", True)
+        self.dir_btn.setStyleSheet("padding: 4px 8px;") # Reduce padding for this specific button
+        self.dir_btn.clicked.connect(self.select_output_dir)
+        out_dir_layout.addWidget(self.dir_btn)
+        
+        settings_layout.addLayout(out_dir_layout)
+
+        # File Name Row
         template_layout = QHBoxLayout()
         template_layout.setSpacing(5)
-        template_label = QLabel("Output:")
+        template_label = QLabel("File Name:") # Changed label
         template_label.setStyleSheet("color: #9E9E9E; font-size: 8pt;")
         template_layout.addWidget(template_label)
 
         self.output_template_entry = QLineEdit()
-        self.output_template_entry.setPlaceholderText("C:\\out\\{filename}_remapped{ext}")
+        self.output_template_entry.setText("{filename}_remap{ext}") # Default value
+        self.output_template_entry.setPlaceholderText("{filename}_remap{ext}")
         self.output_template_entry.setMinimumHeight(24)
         self.output_template_entry.setStyleSheet("font-size: 8pt; padding: 4px 8px;")
         template_layout.addWidget(self.output_template_entry, 1)
-
-        template_btn = QPushButton("Select")
-        template_btn.setFixedWidth(70)
-        template_btn.setProperty("secondary", True)
-        template_btn.clicked.connect(self.select_output_dir)
-        template_layout.addWidget(template_btn)
+        
+        # Select button removed from here
+        
         settings_layout.addLayout(template_layout)
 
         # Open explorer checkbox
         self.open_explorer_check = QCheckBox("Open folder after remapping")
-        self.open_explorer_check.setStyleSheet("font-size: 9pt; color: #9E9E9E;")
+        self.open_explorer_check.setStyleSheet("font-size: 9pt; color: #E0E0E0;")
+        self.open_explorer_check.setChecked(False) # Default False
         settings_layout.addWidget(self.open_explorer_check)
         
         main_layout.addWidget(self.settings_panel)
@@ -436,11 +477,37 @@ class MidiDrumRemapperGUI(QMainWindow):
         if self.settings_expanded:
             self.settings_panel.show()
             self.settings_toggle_btn.setText("Output Settings △")
-            self.setFixedHeight(360)
+            self.setFixedHeight(400) # Increased height to fit new controls
         else:
             self.settings_panel.hide()
             self.settings_toggle_btn.setText("Output Settings ▽")
             self.setFixedHeight(260)
+            
+    def toggle_output_controls(self):
+        """Toggle output directory controls based on checkbox"""
+        use_same = self.same_folder_check.isChecked()
+        self.use_same_folder = use_same
+        
+        self.dir_label_title.setEnabled(not use_same)
+        self.out_dir_val_label.setEnabled(not use_same)
+        self.dir_btn.setEnabled(not use_same)
+        
+        # Determine label text (Always show selected dir or placeholder)
+        if self.output_dir:
+            self.out_dir_val_label.setText(self.output_dir)
+        else:
+            self.out_dir_val_label.setText("Select folder...")
+
+        # Apply styles based on state
+        if use_same:
+            self.out_dir_val_label.setStyleSheet("color: #505050; font-size: 8pt;") # Disabled look (no italic)
+            self.dir_label_title.setStyleSheet("color: #505050; font-size: 8pt;")
+        else:
+            self.dir_label_title.setStyleSheet("color: #9E9E9E; font-size: 8pt;") # Enabled label
+            if self.output_dir:
+                self.out_dir_val_label.setStyleSheet("color: #E0E0E0; font-size: 8pt;")
+            else:
+                self.out_dir_val_label.setStyleSheet("color: #EF5350; font-size: 8pt;") # Error/Warning color but consistent font
     
     def select_output_dir(self):
         """Output directory selection dialog"""
@@ -449,8 +516,10 @@ class MidiDrumRemapperGUI(QMainWindow):
             "Select output folder"
         )
         if directory:
-            template = Path(directory) / "{filename}{ext}"
-            self.output_template_entry.setText(str(template))
+            self.output_dir = str(Path(directory))
+            self.out_dir_val_label.setText(self.output_dir)
+            self.out_dir_val_label.setStyleSheet("color: #E0E0E0; font-size: 8pt;")
+            # No longer updates text entry
     
     def update_file_display(self):
         """Update file display"""
@@ -478,18 +547,40 @@ class MidiDrumRemapperGUI(QMainWindow):
         if self.is_converting:
             return
         
-        # Change UI state
-        self.is_converting = True
+        # Get output settings (moved up before state change)
+        filename_template = self.output_template_entry.text().strip()
+        if not filename_template:
+            filename_template = "{filename}_remap{ext}"
+            
+        # Check for existing files (Overwrite Protection)
+        # Check for existing files (Overwrite Protection)
+        files_to_process = self.check_and_filter_files(self.input_files, filename_template)
+        # If cancelled or all skipped (empty list but inputs existed), reset UI
+        if not files_to_process:
+            self.file_select_area.reset_display()
+            return
+
+        final_template = ""
+        if self.use_same_folder:
+            # Use {input_dir} placeholder to ensure absolute path relative to input file
+            final_template = str(Path("{input_dir}") / filename_template)
+        else:
+            if not self.output_dir:
+                # Force selection if not set
+                self.select_output_dir()
+                # If still not set (user cancelled), abort
+                if not self.output_dir:
+                    return
+            final_template = str(Path(self.output_dir) / filename_template)
         
-        # Get output settings
-        output_template = self.output_template_entry.text().strip()
-        self.output_template = output_template
+        # Change UI state (only after all checks pass)
+        self.is_converting = True
         
         # Start thread
         self.remapping_thread = RemappingThread(
-            self.input_files,
+            files_to_process,
             actual_mapping,
-            output_template
+            final_template
         )
         self.remapping_thread.progress.connect(self.on_progress)
         self.remapping_thread.finished.connect(self.on_remapping_complete)
@@ -541,22 +632,27 @@ class MidiDrumRemapperGUI(QMainWindow):
                     index = self.mapping_display_names.index(last_mapping)
                     self.mapping_combo.setCurrentIndex(index)
                 # Restore output settings
-                if 'output_template' in config:
-                    self.output_template = config['output_template']
-                else:
-                    legacy_dir = config.get('output_dir', '')
-                    legacy_suffix = config.get('output_suffix', '_remapped')
-                    if legacy_dir:
-                        self.output_template = str(Path(legacy_dir) / f"{{filename}}{legacy_suffix}{{ext}}")
-                    elif legacy_suffix:
-                        self.output_template = f"{{filename}}{legacy_suffix}{{ext}}"
-                    else:
-                        self.output_template = ''
+                # Restore output settings
+                if 'use_same_folder' in config:
+                    self.use_same_folder = config['use_same_folder']
+                    self.same_folder_check.setChecked(self.use_same_folder)
+                
+                if 'output_dir' in config:
+                    self.output_dir = config['output_dir']
+                    if self.output_dir and not self.use_same_folder:
+                        self.out_dir_val_label.setText(self.output_dir)
+                        self.out_dir_val_label.setStyleSheet("color: #E0E0E0; font-size: 8pt;")
+                
+                # Update controls state
+                self.toggle_output_controls() # Apply state to UI
+                
+                if 'filename_template' in config:
+                    self.output_template_entry.setText(config['filename_template'])
+                elif 'output_template' in config:
+                    # Migration from old config if possible, or just ignore complex ones
+                    pass 
 
-                if self.output_template:
-                    self.output_template_entry.setText(self.output_template)
-
-                self.open_explorer = config.get('open_explorer', False)
+                self.open_explorer = config.get('open_explorer', False) # Default False if missing
                 self.open_explorer_check.setChecked(self.open_explorer)
                 
         except Exception as e:
@@ -567,7 +663,9 @@ class MidiDrumRemapperGUI(QMainWindow):
         try:
             config = {
                 'last_mapping': self.mapping_combo.currentText() if self.mapping_combo.currentIndex() >= 0 else "",
-                'output_template': self.output_template_entry.text().strip(),
+                'filename_template': self.output_template_entry.text().strip(),
+                'output_dir': self.output_dir,
+                'use_same_folder': self.same_folder_check.isChecked(), # New config
                 'open_explorer': self.open_explorer_check.isChecked()
             }
             
@@ -606,6 +704,101 @@ class MidiDrumRemapperGUI(QMainWindow):
             self.close()
         else:
             super().keyPressEvent(event)
+
+    def check_and_filter_files(self, files: List[Path], filename_template: str) -> List[Path]:
+        """Check for existing files and ask user"""
+        
+        # Helper to predict output path (logic from Thread)
+        def predict_output(input_file: Path) -> Path:
+            template = filename_template
+            
+            # Determine base directory
+            base_dir = input_file.parent if self.use_same_folder else Path(self.output_dir)
+            
+            placeholders = {
+                "{filename}": input_file.stem,
+                "{ext}": input_file.suffix,
+                "{input_dir}": str(input_file.parent)
+            }
+            
+            for key, value in placeholders.items():
+                template = template.replace(key, value)
+                
+            return base_dir / template
+
+        existing_files = []
+        for f in files:
+            try:
+                out_path = predict_output(f)
+                if out_path.exists():
+                    existing_files.append((f, out_path))
+            except:
+                pass
+        
+        if not existing_files:
+            return files
+
+        # Conflict resolution logic
+        final_files = []
+        overwrite_all = False
+        skip_all = False
+        
+        # Add non-conflicting files first
+        conflicting_inputs = [i for i, _ in existing_files]
+        final_files.extend([f for f in files if f not in conflicting_inputs])
+
+        # Process conflicts
+        total_conflicts = len(existing_files)
+        
+        for input_file, out_path in existing_files:
+            if skip_all:
+                continue
+            
+            if overwrite_all:
+                final_files.append(input_file)
+                continue
+                
+            # Show Dialog for individual conflict
+            msg = QMessageBox(self)
+            msg.setWindowTitle("Confirm Overwrite")
+            msg.setText(f"File already exists:\n{out_path.name}")
+            msg.setInformativeText("Would you like to overwrite it?")
+            msg.setIcon(QMessageBox.Question)
+            
+            # Checkbox for "Apply to all" (only if multiple conflicts)
+            cb = None
+            if total_conflicts > 1:
+                cb = QCheckBox("Apply to all conflicts")
+                msg.setCheckBox(cb)
+            
+            overwrite_btn = msg.addButton("Overwrite", QMessageBox.YesRole)
+            
+            # Skip button (only if multiple conflicts)
+            skip_btn = None
+            if total_conflicts > 1:
+                skip_btn = msg.addButton("Skip", QMessageBox.NoRole)
+                
+            cancel_btn = msg.addButton(QMessageBox.Cancel)
+            
+            msg.exec()
+            
+            apply_to_all = cb.isChecked() if cb else False
+            
+            clicked = msg.clickedButton()
+            
+            if clicked == cancel_btn:
+                return [] # Abort everything
+            
+            if clicked == overwrite_btn:
+                final_files.append(input_file)
+                if apply_to_all:
+                    overwrite_all = True
+            
+            elif skip_btn and clicked == skip_btn:
+                if apply_to_all:
+                    skip_all = True
+                    
+        return final_files
 
     def closeEvent(self, event):
         """Window close handler"""
