@@ -1,2 +1,11 @@
 /.venv
 /__pycache__
+/build/MIDI Drum Remapper/localpycs
+/dist
+*.toc
+build/MIDI Drum Remapper/base_library.zip
+*.pkg
+*.pyz
+build/MIDI Drum Remapper/warn-MIDI Drum Remapper.txt
+build/MIDI Drum Remapper/xref-MIDI Drum Remapper.html
+MIDI Drum Remapper.spec

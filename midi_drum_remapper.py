@@ -97,6 +97,9 @@ class DrumMapRemapper:
                         original_note = msg.note
                         original_velocity = msg.velocity
                         
+                        # Force channel to 9 (MIDI Channel 10) for drums
+                        new_msg.channel = 9
+                        
                         # Remap with conditional mapping
                         remapped_note, output_velocity = self.remap_note(original_note, original_velocity)
                         new_msg.note = remapped_note

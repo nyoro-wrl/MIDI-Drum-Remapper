@@ -285,7 +285,13 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.setGeometry(100, 100, 400, 260)
         
         # Config file path
-        self.config_file = Path(__file__).parent / "config.json"
+        # Determine config file path
+        if getattr(sys, 'frozen', False):
+            base_path = Path(sys.executable).parent
+        else:
+            base_path = Path(__file__).parent
+            
+        self.config_file = base_path / "config.json"
         
         # Font settings
         self.default_font = ("Segoe UI", 9)
@@ -809,11 +815,27 @@ class MidiDrumRemapperGUI(QMainWindow):
 def main():
     """Main function"""
     app = QApplication(sys.argv)
-    app.setApplicationName("MIDI Drum Remapper")
+    
+    # Set application style
+    app.setStyle("Fusion")
     
     window = MidiDrumRemapperGUI()
     window.show()
     
+    # Check for command line arguments (files dropped onto exe)
+    if len(sys.argv) > 1:
+        initial_files = []
+        for arg in sys.argv[1:]:
+            path = Path(arg)
+            if path.exists() and path.suffix.lower() in ['.mid', '.midi']:
+                initial_files.append(path)
+        
+        if initial_files:
+            # Delay slightly to ensure window is ready
+            # Use QTimer.singleShot is safest for UI updates after show
+            from PySide6.QtCore import QTimer
+            QTimer.singleShot(100, lambda: window.on_files_selected(initial_files))
+
     sys.exit(app.exec())
 
 

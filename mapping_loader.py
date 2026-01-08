@@ -21,16 +21,23 @@ class MappingLoader:
         """
         self.mappings_dir = Path(mappings_dir)
         
-        # Resolve path based on script location
+        # Resolve path based on execution context (Frozen vs Script)
+        if getattr(sys, 'frozen', False):
+            # If frozen (PyInstaller), look in the same directory as the executable
+            base_path = Path(sys.executable).parent
+        else:
+            # If script, look in the script's directory
+            base_path = Path(__file__).parent
+            
         if not self.mappings_dir.is_absolute():
-            script_dir = Path(__file__).parent
-            self.mappings_dir = script_dir / self.mappings_dir
+            self.mappings_dir = base_path / self.mappings_dir
         
         if not self.mappings_dir.exists():
-            raise FileNotFoundError(
-                f"Mapping directory not found: {self.mappings_dir}\n"
-                f"Please create mappings/ folder and place mapping files."
-            )
+            try:
+                self.mappings_dir.mkdir(parents=True, exist_ok=True)
+                print(f"Created mappings directory: {self.mappings_dir}")
+            except Exception as e:
+                print(f"Failed to create mappings directory: {e}")
     
     
     def load_conversion_table(self, filename: str) -> Tuple[Dict[int, int], Dict[int, int], Dict[int, Dict[int, Tuple[int, Optional[int]]]]]:
