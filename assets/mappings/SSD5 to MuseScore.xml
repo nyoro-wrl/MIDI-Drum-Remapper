@@ -1,75 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map>
-	<Note from="95" to="49"/>
-	<Note from="94" to="57"/>
-	<Note from="93" to="60"/>
-	<Note from="92" to="57"/>
-	<Note from="91" to="49"/>
-	<Note from="90" to="55"/>
-	<Note from="84" to="53"/>
-	<Note from="83" to="53"/>
-	<Note from="82" to="54"/>
-	<Note from="81" to="54"/>
-	<Note from="80" to="54"/>
-	<Note from="79" to="54"/>
-	<Note from="78" to="54"/>
-	<Note from="77" to="54"/>
-	<Note from="76" to="38"/>
-	<Note from="75" to="56"/>
-	<Note from="74" to="56"/>
-	<Note from="73" to="44"/>
-	<Note from="72" to="44"/>
-	<Note from="71" to="46"/>
-	<Note from="70" to="46"/>
-	<Note from="69" to="46"/>
-	<Note from="68" to="42"/>
-	<Note from="67" to="42"/>
-	<Note from="66" to="42"/>
-	<Note from="65" to="46"/>
-	<Note from="64" to="46"/>
-	<Note from="63" to="46"/>
-	<Note from="62" to="42"/>
-	<Note from="61" to="42"/>
-	<Note from="60" to="42"/>
-	<Note from="59" to="59"/>
-	<Note from="58" to="51" velocity="1"/>
-	<Note from="57" to="57"/>
-	<Note from="56" to="57" velocity="1"/>
-	<Note from="55" to="49"/>
-	<Note from="54" to="49" velocity="1"/>
-	<Note from="53" to="53"/>
-	<Note from="52" to="51"/>
-	<Note from="51" to="51"/>
-	<Note from="50" to="55"/>
-	<Note from="49" to="55" velocity="1"/>
-	<Note from="48" to="48"/>
-	<Note from="47" to="47"/>
-	<Note from="46" to="46"/>
-	<Note from="45" to="45"/>
-	<Note from="44" to="44"/>
-	<Note from="43" to="43"/>
-	<Note from="42" to="42"/>
-	<Note from="41" to="41"/>
-	<Note from="40" to="40"/>
-	<Note from="39" to="38"/>
-	<Note from="38" to="38"/>
-	<Note from="37" to="37"/>
-	<Note from="36" to="36"/>
-	<Note from="35" to="35"/>
-	<Note from="34" to="38"/>
-	<Note from="33" to="38"/>
-	<Note from="32" to="60" velocity="1"/>
-	<Note from="31" to="60"/>
-	<Note from="30" to="57" velocity="1"/>
-	<Note from="29" to="57"/>
-	<Note from="28" to="49"/>
-	<Note from="27" to="49" velocity="1"/>
-	<Note from="26" to="42"/>
-	<Note from="22" to="42"/>
-	<Note from="21" to="38"/>
-	<Note from="19" to="48"/>
-	<Note from="17" to="47"/>
-	<Note from="16" to="45"/>
-	<Note from="14" to="43"/>
-	<Note from="12" to="41"/>
+	<!-- Kick 1 -->
+	<Note from="36" to="36"/> <!-- Kick Center (stacked) -->
+	<!-- Kick 2 -->
+	<Note from="35" to="35"/> <!-- Kick Double (stacked) -->
+	<!-- Sidestick -->
+	<Note from="37" to="37"/> <!-- Snare Sidestick -->
+	<!-- Snare -->
+	<Note from="76" to="38"/> <!-- Clap -->
+	<Note from="39" to="38"/> <!-- Snare Rimclick -->
+	<Note from="38" to="38"/> <!-- Snare Center -->
+	<Note from="34" to="38"/> <!-- Snare Side -->
+	<Note from="33" to="38"/> <!-- Snare Rimshot Edge -->
+	<Note from="21" to="38"/> <!-- Snare Rolls -->
+	<!-- Electric Snare -->
+	<Note from="40" to="40"/> <!-- Snare Rimshot -->
+	<!-- Low Floor Tom -->
+	<Note from="41" to="41"/> <!-- Floor Tom 2 Center -->
+	<Note from="12" to="41"/> <!-- Floor Tom 2 Rimclick -->
+	<!-- Closed Hi-Hat -->
+	<Note from="68" to="42"/> <!-- Hi-Hat Tip Loosen -->
+	<Note from="67" to="42"/> <!-- Hi-Hat Tip Closed -->
+	<Note from="66" to="42"/> <!-- Hi-Hat Tip Closed Tight -->
+	<Note from="62" to="42"/> <!-- Hi-Hat Shank Loosen -->
+	<Note from="61" to="42"/> <!-- Hi-Hat Shank Closed -->
+	<Note from="60" to="42"/> <!-- Hi-Hat Shank Closed Tight -->
+	<Note from="42" to="42"/> <!-- Hi-Hat Tip Closed -->
+	<Note from="26" to="42"/> <!-- Hi-Hat Shank CC Controlable -->
+	<Note from="22" to="42"/> <!-- Hi-Hat Shank Closed -->
+	<!-- High Floor Tom (Generally: Floor Tom) -->
+	<Note from="43" to="43"/> <!-- Floor Tom 1 Center -->
+	<Note from="14" to="43"/> <!-- Floor Tom 1 Rimclick -->
+	<!-- Pedal Hi-Hat -->
+	<Note from="73" to="44"/> <!-- Hi-Hat Footsplash -->
+	<Note from="72" to="44"/> <!-- Hi-Hat Pedal -->
+	<Note from="44" to="44"/> <!-- Hi-Hat Pedal -->
+	<!-- Low Tom -->
+	<Note from="45" to="45"/> <!-- Xtra Rack Tom Center -->
+	<Note from="16" to="45"/> <!-- Xtra Rack Tom Rimclick -->
+	<!-- Open Hi-Hat -->
+	<Note from="71" to="46"/> <!-- Hi-Hat Tip Open 3 -->
+	<Note from="70" to="46"/> <!-- Hi-Hat Tip Open 2 -->
+	<Note from="69" to="46"/> <!-- Hi-Hat Tip Open 1 -->
+	<Note from="65" to="46"/> <!-- Hi-Hat Shank Open 3 -->
+	<Note from="64" to="46"/> <!-- Hi-Hat Shank Open 2 -->
+	<Note from="63" to="46"/> <!-- Hi-Hat Shank Open 1 -->
+	<Note from="46" to="46"/> <!-- Hi-Hat Tip CC Controlable -->
+	<!-- Low Mid Tom (Generally: Low Tom) -->
+	<Note from="47" to="47"/> <!-- Rack Tom 2 Center -->
+	<Note from="17" to="47"/> <!-- Rack Tom 2 Rimclick -->
+	<!-- High Mid Tom (Generally: High Tom) -->
+	<Note from="48" to="48"/> <!-- Rack Tom 1 Center -->
+	<Note from="19" to="48"/> <!-- Rack Tom 1 Rimclick -->
+	<!-- Crash Cymbal Left -->
+	<Note from="95" to="49"/> <!-- XL Cymbal Tip -->
+	<Note from="91" to="49"/> <!-- Crash Left Tip -->
+	<Note from="55" to="49"/> <!-- Crash Left Edge -->
+	<Note from="54" to="49" velocity="1"/> <!-- Crash Left Choke -->
+	<Note from="28" to="49"/> <!-- XL Cymbal Edge -->
+	<Note from="27" to="49" velocity="1"/> <!-- XL Cymbal Choke -->
+	<!-- Ride Cymbal 1 -->
+	<Note from="58" to="51" velocity="1"/> <!-- Ride Choke -->
+	<Note from="52" to="51"/> <!-- Ride Bow Shank -->
+	<Note from="51" to="51"/> <!-- Ride Bow Tip -->
+	<!-- Ride Bell -->
+	<Note from="84" to="53"/> <!-- Bell Right -->
+	<Note from="83" to="53"/> <!-- Bell Left -->
+	<Note from="53" to="53"/> <!-- Ride Bell -->
+	<!-- Tambourine -->
+	<Note from="82" to="54"/> <!-- Shaker Hit -->
+	<Note from="81" to="54"/> <!-- Shaker Down -->
+	<Note from="80" to="54"/> <!-- Shaker Up -->
+	<Note from="79" to="54"/> <!-- Tambourine Hit -->
+	<Note from="78" to="54"/> <!-- Tambourine Down -->
+	<Note from="77" to="54"/> <!-- Tambourine Up -->
+	<!-- Splash Cymbal -->
+	<Note from="90" to="55"/> <!-- Splash Tip -->
+	<Note from="50" to="55"/> <!-- Splash Edge -->
+	<Note from="49" to="55" velocity="1"/> <!-- Splash Choke -->
+	<!-- Cowbell -->
+	<Note from="75" to="56"/> <!-- Cowbell Tip -->
+	<Note from="74" to="56"/> <!-- Cowbell Shank -->
+	<!-- Crash Cymbal Right -->
+	<Note from="94" to="57"/> <!-- XR Cymbal Tip -->
+	<Note from="92" to="57"/> <!-- Crash Right Tip -->
+	<Note from="57" to="57"/> <!-- Crash Right Edge -->
+	<Note from="56" to="57" velocity="1"/> <!-- Crash Right Choke -->
+	<Note from="30" to="57" velocity="1"/> <!-- XR Cymbal Choke -->
+	<Note from="29" to="57"/> <!-- XR Cymbal Edge -->
+	<!-- Ride Cymbal 2 -->
+	<Note from="59" to="59"/> <!-- Ride Edge -->
+	<!-- China Cymbal -->
+	<Note from="93" to="60"/> <!-- China Tip -->
+	<Note from="32" to="60" velocity="1"/> <!-- China Choke -->
+	<Note from="31" to="60"/> <!-- China Edge -->
 </Map>

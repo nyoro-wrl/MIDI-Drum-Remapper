@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Map>
+	<!-- Kick 1 -->
+	<Note from="36" to="36"/> <!-- Kick -->
+	<!-- Sidestick -->
+	<Note from="75" to="37"/> <!-- Sticks -->
+	<Note from="44" to="37"/> <!-- Snare Rim -->
+	<Note from="42" to="37"/> <!-- Snare Sidestick -->
+	<!-- Snare -->
+	<Note from="101" to="38"/> <!-- Electric Snare Hit -->
+	<Note from="43" to="38"/> <!-- Snare Hit Alternative -->
+	<Note from="40" to="38"/> <!-- Snare Hit Alternative -->
+	<Note from="38" to="38"/> <!-- Snare Hit -->
+	<!-- Electric Snare -->
+	<Note from="41" to="40"/> <!-- Snare Rimshot Alternative -->
+	<Note from="39" to="40"/> <!-- Snare Rimshot Alternative -->
+	<Note from="37" to="40"/> <!-- Snare Rimshot -->
+	<!-- Closed Hi-Hat -->
+	<Note from="53" to="42"/> <!-- Hi Hat Closed Bell -->
+	<Note from="52" to="42"/> <!-- Hi Hat Closed Edge -->
+	<Note from="51" to="42"/> <!-- Hi Hat Closed Tip -->
+	<Note from="50" to="42"/> <!-- Hi Hat Tight Edge -->
+	<Note from="49" to="42"/> <!-- Hi Hat Tight Tip -->
+	<!-- High Floor Tom (Generally: Floor Tom) -->
+	<Note from="66" to="43"/> <!-- Floortom 1 Rimshot -->
+	<Note from="65" to="43"/> <!-- Floortom 1 Hit -->
+	<!-- Pedal Hi-Hat -->
+	<Note from="59" to="44"/> <!-- Hi Hat Pedal Splash -->
+	<Note from="48" to="44"/> <!-- Hi Hat Pedal Close Foot -->
+	<!-- Low Tom -->
+	<Note from="68" to="45"/> <!-- Racktom 3 Rimshot -->
+	<Note from="67" to="45"/> <!-- Racktom 3 Hit -->
+	<!-- Open Hi-Hat -->
+	<Note from="58" to="46"/> <!-- Hi Hat Open 1 Bell -->
+	<Note from="57" to="46"/> <!-- Hi Hat Open 3 -->
+	<Note from="56" to="46"/> <!-- Hi Hat Open 2 -->
+	<Note from="55" to="46"/> <!-- Hi Hat Open 1 -->
+	<Note from="54" to="46"/> <!-- Hi Hat Loose -->
+	<!-- Low Mid Tom (Generally: Low Tom) -->
+	<Note from="70" to="47"/> <!-- Racktom 2 Rimshot -->
+	<Note from="69" to="47"/> <!-- Racktom 2 Hit -->
+	<!-- High Mid Tom (Generally: High Tom) -->
+	<Note from="72" to="48"/> <!-- Racktom 1 Rimshot -->
+	<Note from="71" to="48"/> <!-- Racktom 1 Hit -->
+	<!-- Crash Cymbal Left -->
+	<Note from="90" to="49" velocity="1"/> <!-- Cymbal Crash 4 Stop Hand only -->
+	<Note from="89" to="49"/> <!-- Cymbal Crash 4 Hit -->
+	<Note from="78" to="49" velocity="1"/> <!-- Cymbal Crash 1 Stop Hand only -->
+	<Note from="77" to="49"/> <!-- Cymbal Crash 1 Hit -->
+	<Note from="46" to="49"/> <!-- Cymbal Crash 1 Hit Alternative -->
+	<!-- Ride Cymbal 1 -->
+	<Note from="87" to="51" velocity="1"/> <!-- Ride 2 Stop Hand only -->
+	<Note from="84" to="51"/> <!-- Ride 2 Bow -->
+	<Note from="63" to="51" velocity="1"/> <!-- Ride 1 Stop Hand only -->
+	<Note from="60" to="51"/> <!-- Ride 1 Bow -->
+	<Note from="45" to="51"/> <!-- Ride 1 Bow Alternative -->
+	<!-- Unknown 52 -->
+	<Note from="92" to="52" velocity="1"/> <!-- Cymbal China 1 Stop Hand only -->
+	<Note from="91" to="52"/> <!-- Cymbal China 1 Hit -->
+	<!-- Ride Bell -->
+	<Note from="85" to="53"/> <!-- Ride 2 Bell -->
+	<Note from="61" to="53"/> <!-- Ride 1 Bell -->
+	<!-- Cowbell -->
+	<Note from="47" to="56"/> <!-- Cowbell -->
+	<!-- Crash Cymbal Right -->
+	<Note from="94" to="57" velocity="1"/> <!-- Cymbal Crash 6 Stop Hand only -->
+	<Note from="93" to="57"/> <!-- Cymbal Crash 6 Hit -->
+	<Note from="82" to="57" velocity="1"/> <!-- Cymbal Crash 3 Stop Hand only -->
+	<Note from="81" to="57"/> <!-- Cymbal Crash 3 Hit -->
+	<Note from="80" to="57" velocity="1"/> <!-- Cymbal Crash 2 Stop Hand only -->
+	<Note from="79" to="57"/> <!-- Cymbal Crash 2 Hit -->
+	<!-- Ride Cymbal 2 -->
+	<Note from="86" to="59"/> <!-- Ride 2 Edge -->
+	<Note from="62" to="59"/> <!-- Ride 1 Edge -->
+</Map>
