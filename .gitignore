@@ -9,3 +9,4 @@ build/MIDI Drum Remapper/base_library.zip
 build/MIDI Drum Remapper/warn-MIDI Drum Remapper.txt
 build/MIDI Drum Remapper/xref-MIDI Drum Remapper.html
 MIDI Drum Remapper.spec
+/src/__pycache__

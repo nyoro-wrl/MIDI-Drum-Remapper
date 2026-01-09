@@ -1,4 +1,4 @@
-# MIDI Drum Remapper
+# MIDI Drum MuseScore Remapper
 
 DAWで打ち込んだドラムMIDIファイルを、MuseScoreなどの楽譜ソフトに **問題なく** インポートするために使う変換ソフトです。
 DAWから出力したMIDIファイルは、そのままではドラムの仕様に沿っておらず、楽譜ソフトにインポートするとうまくいきません。
@@ -30,19 +30,23 @@ DAWから出力したMIDIファイルは、そのままではドラムの仕様�
 <Note from="38" to="40" velocity="127"/>
 ```
 
-#### 2. `<If>` 要素 (条件付きマッピング)
-特定の入力ベロシティに対して、特別なマッピングルールを適用する場合に使用します。
+#### 2. `<Group>` 要素
+宛先のMIDIノート番号が共通するノートをまとめる要素です。
 
-*   **velocity**: (必須) 条件となる入力ベロシティ (0-127)
+*   **to**: (必須) 変換先のMIDIノート番号 (0-127)
+*   **velocity**: (任意) 出力ベロシティ（グループ内共通）(0-127)
 *   この要素の子要素として `<Note>` を定義します。
+
+`<Group to="XX">` の中にある `<Note>` 要素は、`to` 属性を指定する必要がありません。
+`Group`と`Note`の両方に`velocity`が指定された場合、**`Note`側が優先**されます。
 
 例:
 ```xml
-<!-- 入力ベロシティが127の場合のみ適用されるルール -->
-<If velocity="127">
-    <!-- ベロシティ127でノート38が来た場合、ノート40に変換 -->
-    <Note from="38" to="40"/>
-</If>
+<!-- ノート36, 40をノート38に変換。ノート36はvelocity100、ノート40はvelocity127 (Group指定) -->
+<Group to="38" velocity="127">
+    <Note from="36" velocity="100"/>
+    <Note from="40"/>
+</Group>
 ```
 
 ## MuseScore ドラムMIDIノート番号
@@ -73,7 +77,14 @@ MuseScoreに変換したい場合の参考にしてください。
 55: Splash Cymbal
 52: China Cymbal
 
+27: High Q
+28: Slap
+29: Scratch Push
+30: Scratch Pull
 31: Sticks
+32: Square Click
+33: Metronome Click
+34: Metronome Bell
 39: Hand Clap
 54: Tambourine
 56: Cowbell
@@ -106,11 +117,3 @@ MuseScoreに変換したい場合の参考にしてください。
 85: Castanets
 86: Mute Surdo
 87: Open Surdo
-
-27: High Q
-28: Slap
-29: Scratch Push
-30: Scratch Pull
-32: Square Click
-33: Metronome Click
-34: Metronome Bell

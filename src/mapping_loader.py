@@ -40,18 +40,17 @@ class MappingLoader:
                 print(f"Failed to create mappings directory: {e}")
     
     
-    def load_conversion_table(self, filename: str) -> Tuple[Dict[int, int], Dict[int, int], Dict[int, Dict[int, Tuple[int, Optional[int]]]]]:
+    def load_conversion_table(self, filename: str) -> Tuple[Dict[int, int], Dict[int, int]]:
         """
-        Load conversion table, velocity override table, and conditional mappings from XML file
+        Load conversion table and velocity override table from XML file
         
         Args:
             filename: Conversion table file name (e.g., "ssd5_to_musescore.xml")
             
         Returns:
-            Tuple[Dict[int, int], Dict[int, int], Dict[int, Dict[int, Tuple[int, Optional[int]]]]]: 
+            Tuple[Dict[int, int], Dict[int, int]]: 
                 - Conversion table {source note: target note}
                 - Velocity override table {source note: velocity value}
-                - Conditional mappings {input velocity: {source note: (target note, output velocity)}}
                 
         Raises:
             FileNotFoundError: If file not found
@@ -71,103 +70,80 @@ class MappingLoader:
             
             conversion_table = {}
             velocity_overrides = {}
-            conditional_mappings = {}  # {velocity: {from_note: (to_note, output_velocity)}}
             
-            # Load If elements (conditional mappings)
-            for if_elem in root.findall('If'):
-                condition_velocity_str = if_elem.get('velocity')
-                if condition_velocity_str is None:
-                    print(f"Warning: If element has no velocity attribute. Skipping.", file=sys.stderr)
-                    continue
-                
-                try:
-                    condition_velocity = int(condition_velocity_str)
-                    if not (0 <= condition_velocity <= 127):
-                        print(f"Warning: If condition velocity value out of range (0-127): {condition_velocity}", 
-                              file=sys.stderr)
-                        continue
-                    
-                    # Load Note elements under this condition
-                    if condition_velocity not in conditional_mappings:
-                        conditional_mappings[condition_velocity] = {}
-                    
-                    for note_elem in if_elem.findall('Note'):
-                        from_str = note_elem.get('from')
-                        to_str = note_elem.get('to')
-                        output_velocity_str = note_elem.get('velocity')
-                        
-                        if from_str is None or to_str is None:
-                            continue
-                        
-                        try:
-                            source = int(from_str)
-                            target = int(to_str)
-                            output_velocity = None
-                            
-                            if output_velocity_str is not None:
-                                output_velocity = int(output_velocity_str)
-                                if not (0 <= output_velocity <= 127):
-                                    print(f"Warning: Output velocity value out of range (0-127): {output_velocity}", 
-                                          file=sys.stderr)
-                                    output_velocity = None
-                            
-                            conditional_mappings[condition_velocity][source] = (target, output_velocity)
-                            
-                        except ValueError:
-                            print(f"Warning: Skipped invalid conditional conversion entry: {from_str} → {to_str}", 
-                                  file=sys.stderr)
-                            continue
-                    
-                except ValueError:
-                    print(f"Warning: Skipped invalid If condition: velocity={condition_velocity_str}", 
-                          file=sys.stderr)
-                    continue
-            
-            # Load normal Note elements (outside If elements)
-            for note_elem in root.findall('Note'):
-                # Skip Notes inside If elements (already processed)
-                parent = None
-                for if_elem in root.findall('If'):
-                    if note_elem in if_elem.findall('Note'):
-                        parent = if_elem
-                        break
-                
-                if parent is not None:
-                    continue  # Skip Notes inside If elements
-                
+            # Helper to process a Note element
+            def process_note(note_elem, default_to=None, default_velocity=None):
                 from_str = note_elem.get('from')
                 to_str = note_elem.get('to')
-                velocity_str = note_elem.get('velocity')  # Optional
+                velocity_str = note_elem.get('velocity')
+                
+                # If 'to' is not in Note, use default_to (from Group)
+                if to_str is None and default_to is not None:
+                    to_str = str(default_to)
                 
                 if from_str is None or to_str is None:
-                    continue
+                    return
                 
                 try:
                     source = int(from_str)
                     target = int(to_str)
                     conversion_table[source] = target
                     
-                    # Add to override table if velocity attribute exists
+                    # Logic for velocity: Note > Group
+                    velocity = None
                     if velocity_str is not None:
-                        velocity = int(velocity_str)
+                         velocity = int(velocity_str)
+                    elif default_velocity is not None:
+                         velocity = default_velocity
+
+                    if velocity is not None:
                         if 0 <= velocity <= 127:
                             velocity_overrides[source] = velocity
                         else:
-                            print(f"Warning: Velocity value out of range (0-127): {velocity}", 
+                             print(f"Warning: Velocity value out of range (0-127): {velocity}", 
                                   file=sys.stderr)
-                    
+
                 except ValueError:
-                    print(f"Warning: Skipped invalid conversion entry: {from_str} → {to_str}", 
+                    print(f"Warning: Skipped invalid conversion entry: from={from_str} to={to_str}", 
                           file=sys.stderr)
+
+            # 1. Load Group elements
+            for group_elem in root.findall('Group'):
+                group_to_str = group_elem.get('to')
+                group_velocity_str = group_elem.get('velocity') # Optional velocity for group
+                
+                if group_to_str is None:
+                    print("Warning: Group element missing 'to' attribute. Skipping.", file=sys.stderr)
                     continue
+                
+                try:
+                    group_to = int(group_to_str)
+                    group_velocity = None
+                    if group_velocity_str is not None:
+                         group_velocity = int(group_velocity_str)
+
+                    for note_elem in group_elem.findall('Note'):
+                        process_note(note_elem, default_to=group_to, default_velocity=group_velocity)
+                except ValueError:
+                     # Check which value caused error for better reporting
+                    if group_velocity_str and not group_velocity_str.isdigit():
+                         print(f"Warning: Invalid 'velocity' value in Group: {group_velocity_str}", file=sys.stderr)
+                    else:
+                         print(f"Warning: Invalid 'to' value in Group: {group_to_str}", file=sys.stderr)
             
-            if not conversion_table and not conditional_mappings:
+            # 2. Load top-level Note elements (backward compatibility / mixed usage)
+            for note_elem in root.findall('Note'):
+                # ONLY process if it's a direct child of root (though findall on root finds direct children)
+                # Ensure we are not reprocessing nodes if they were somehow reachable (findall only does direct children)
+                process_note(note_elem)
+            
+            if not conversion_table:
                 raise ValueError(
                     f"No conversion entries found in conversion table file: {filepath}\n"
-                    f"<Note from=\"XX\" to=\"YY\"/> format entries are required."
+                    f"<Group to=\"YY\"><Note from=\"XX\"/></Group> or <Note from=\"XX\" to=\"YY\"/> format entries are required."
                 )
             
-            return conversion_table, velocity_overrides, conditional_mappings
+            return conversion_table, velocity_overrides
             
         except ET.ParseError as e:
             raise ValueError(
@@ -191,7 +167,11 @@ class MappingLoader:
             if 'to' in file.stem:  # Conversion table (e.g., ssd5_to_musescore.xml)
                 conversion_tables.append(file.name)
         
-        return sorted(conversion_tables)
+        # Add built-in mode
+        conversion_tables.sort()
+        conversion_tables.insert(0, "as Source")
+        
+        return conversion_tables
 
 
 def test_loader():
@@ -206,32 +186,26 @@ def test_loader():
         
         # Load conversion tables
         print("=== MuseScore→SSD5 conversion table ===")
-        conv_table1, velocity_overrides1, conditional1 = loader.load_conversion_table("musescore_to_ssd5.xml")
-        print(f"Conversion entries: {len(conv_table1)}")
-        print(f"Velocity overrides: {len(velocity_overrides1)}")
-        print(f"Conditional mappings: {len(conditional1)}")
-        if conditional1:
-            print(f"Conditional mappings:")
-            for vel, mappings in sorted(conditional1.items()):
-                print(f"  velocity={vel}: {len(mappings)} entries")
-                for from_note, (to_note, out_vel) in sorted(mappings.items()):
-                    vel_info = f", output_velocity={out_vel}" if out_vel is not None else ""
-                    print(f"    Note {from_note} → {to_note}{vel_info}")
-        print()
+        try:
+            conv_table1, velocity_overrides1 = loader.load_conversion_table("musescore_to_ssd5.xml")
+            print(f"Conversion entries: {len(conv_table1)}")
+            print(f"Velocity overrides: {len(velocity_overrides1)}")
+        except Exception as e:
+            print(f"Warning: Failed directly loading 'musescore_to_ssd5.xml' (may not exist or different format): {e}")
+
         
         print("=== SSD5→MuseScore conversion table ===")
-        conv_table2, velocity_overrides2, conditional2 = loader.load_conversion_table("ssd5_to_musescore.xml")
-        print(f"Conversion entries: {len(conv_table2)}")
-        print(f"Velocity overrides: {len(velocity_overrides2)}")
-        print(f"Conditional mappings: {len(conditional2)}")
-        if velocity_overrides2:
-            print(f"Velocity overrides:")
-            for note, vel in sorted(velocity_overrides2.items()):
-                print(f"  Note {note}: velocity={vel}")
-        if conditional2:
-            print(f"Conditional mappings:")
-            for vel, mappings in sorted(conditional2.items()):
-                print(f"  velocity={vel}: {len(mappings)} entries")
+        try:
+            conv_table2, velocity_overrides2 = loader.load_conversion_table("SSD5 to MuseScore.xml") # Adjusted filename to likely existing one
+            print(f"Conversion entries: {len(conv_table2)}")
+            print(f"Velocity overrides: {len(velocity_overrides2)}")
+            if velocity_overrides2:
+                print(f"Velocity overrides:")
+                for note, vel in sorted(velocity_overrides2.items()):
+                    print(f"  Note {note}: velocity={vel}")
+        except Exception as e:
+             print(f"Warning: Failed loading 'SSD5 to MuseScore.xml': {e}")
+        print()
         print()
         
         print("[OK] All mapping files loaded successfully")

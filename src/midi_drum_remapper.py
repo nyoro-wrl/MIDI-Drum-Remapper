@@ -30,41 +30,46 @@ except ImportError:
 class DrumMapRemapper:
     """Drum map remapping class"""
     
+    CHANNEL_ONLY_MODE_NAME = "as Source"
+
     def __init__(self, mapping_file: str):
         """
         Args:
             mapping_file: Mapping file name (e.g., "SSD5 to MuseScore.xml")
         """
-        loader = MappingLoader()
-        try:
-            self.conversion_table, self.velocity_overrides, self.conditional_mappings = \
-                loader.load_conversion_table(mapping_file)
-        except Exception as e:
-            print(f"Error: Failed to load mapping file: {e}", file=sys.stderr)
-            sys.exit(1)
+        self.channel_only_mode = (mapping_file == self.CHANNEL_ONLY_MODE_NAME)
+        self.conversion_table = {}
+        self.velocity_overrides = {}
+
+        if not self.channel_only_mode:
+            loader = MappingLoader()
+            try:
+                self.conversion_table, self.velocity_overrides = \
+                    loader.load_conversion_table(mapping_file)
+            except Exception as e:
+                print(f"Error: Failed to load mapping file: {e}", file=sys.stderr)
+                sys.exit(1)
     
-    def remap_note(self, note: int, velocity: int) -> Tuple[int, Optional[int]]:
+    def remap_note(self, note: int) -> int:
         """
-        Remap note (with conditional mapping support based on velocity)
+        Remap note
         
         Args:
             note: Source note number
-            velocity: Input MIDI velocity value
             
         Returns:
-            Tuple[int, Optional[int]]: (Remapped note number, Output velocity or None)
+            int: Remapped note number (or original if not found)
         """
-        # 1. Check conditional mappings first
-        if velocity in self.conditional_mappings and note in self.conditional_mappings[velocity]:
-            target_note, output_velocity = self.conditional_mappings[velocity][note]
-            return target_note, output_velocity
-        
-        # 2. Use normal conversion table
+        # If channel only mode, no remapping
+        if self.channel_only_mode:
+            return note
+
+        # Use conversion table
         if note in self.conversion_table:
-            return self.conversion_table[note], None
+            return self.conversion_table[note]
         
-        # 3. Keep original note if not found
-        return note, None
+        # Keep original note if not found
+        return note
     
     def remap_midi_file(self, input_path: str, output_path: str) -> bool:
         """
@@ -100,15 +105,11 @@ class DrumMapRemapper:
                         # Force channel to 9 (MIDI Channel 10) for drums
                         new_msg.channel = 9
                         
-                        # Remap with conditional mapping
-                        remapped_note, output_velocity = self.remap_note(original_note, original_velocity)
-                        new_msg.note = remapped_note
+                        # Remap note (only if not channel only mode, efficiently handled by remap_note)
+                        new_msg.note = self.remap_note(original_note)
                         
-                        # Velocity override by conditional mapping
-                        if output_velocity is not None and msg.type == 'note_on' and original_velocity > 0:
-                            new_msg.velocity = output_velocity
-                        # Normal velocity override (only for note_on with velocity > 0)
-                        elif msg.type == 'note_on' and original_velocity > 0 and original_note in self.velocity_overrides:
+                        # Velocity override (skip in channel only mode)
+                        if not self.channel_only_mode and msg.type == 'note_on' and original_velocity > 0 and original_note in self.velocity_overrides:
                             new_msg.velocity = self.velocity_overrides[original_note]
                     
                     new_track.append(new_msg)

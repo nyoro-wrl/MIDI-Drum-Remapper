@@ -2,120 +2,66 @@
 <Map>
 	<!-- Bass Drum 1 -->
 	<Group to="36">
-		<Note from="36"/> <!-- Kick -->
 	</Group>
 	<!-- Bass Drum 2 -->
 	<Group to="35">
 	</Group>
 	<!-- Acoustic Snare -->
 	<Group to="38">
-		<Note from="38"/> <!-- Snare Hit -->
-		<Note from="40"/> <!-- Snare Hit Alternative -->
-		<Note from="43"/> <!-- Snare Hit Alternative -->
-		<Note from="44"/> <!-- Snare Rim -->
-		<Note from="37"/> <!-- Snare Rimshot -->
-		<Note from="39"/> <!-- Snare Rimshot Alternative -->
-		<Note from="41"/> <!-- Snare Rimshot Alternative -->
 	</Group>
 	<!-- Electric Snare -->
 	<Group to="40">
-		<Note from="101"/> <!-- Electric Snare Hit -->
 	</Group>
 	<!-- Side Stick -->
 	<Group to="37">
-		<Note from="42"/> <!-- Snare Sidestick -->
 	</Group>
 	<!-- Closed Hi-Hat -->
 	<Group to="42">
-		<Note from="53"/> <!-- Hi Hat Closed Bell -->
-		<Note from="52"/> <!-- Hi Hat Closed Edge -->
-		<Note from="51"/> <!-- Hi Hat Closed Tip -->
-		<Note from="50"/> <!-- Hi Hat Tight Edge -->
-		<Note from="49"/> <!-- Hi Hat Tight Tip -->
 	</Group>
 	<!-- Open Hi-Hat -->
 	<Group to="46">
-		<Note from="54"/> <!-- Hi Hat Loose -->
-		<Note from="55"/> <!-- Hi Hat Open 1 -->
-		<Note from="58"/> <!-- Hi Hat Open 1 Bell -->
-		<Note from="56"/> <!-- Hi Hat Open 2 -->
-		<Note from="57"/> <!-- Hi Hat Open 3 -->
 	</Group>
 	<!-- Pedal Hi-Hat -->
 	<Group to="44">
-		<Note from="48"/> <!-- Hi Hat Pedal Close Foot -->
-		<Note from="59"/> <!-- Hi Hat Pedal Splash -->
 	</Group>
 	<!-- High Tom -->
 	<Group to="50">
 	</Group>
 	<!-- Hi-Mid Tom -->
 	<Group to="48">
-		<Note from="71"/> <!-- Racktom 1 Hit -->
-		<Note from="72"/> <!-- Racktom 1 Rimshot -->
 	</Group>
 	<!-- Low-Mid Tom -->
 	<Group to="47">
-		<Note from="69"/> <!-- Racktom 2 Hit -->
-		<Note from="70"/> <!-- Racktom 2 Rimshot -->
 	</Group>
 	<!-- Low Tom -->
 	<Group to="45">
-		<Note from="67"/> <!-- Racktom 3 Hit -->
-		<Note from="68"/> <!-- Racktom 3 Rimshot -->
 	</Group>
 	<!-- High Floor Tom -->
 	<Group to="43">
-		<Note from="65"/> <!-- Floortom 1 Hit -->
-		<Note from="66"/> <!-- Floortom 1 Rimshot -->
 	</Group>
 	<!-- Low Floor Tom -->
 	<Group to="41">
 	</Group>
 	<!-- Ride Cymbal 1 -->
 	<Group to="51">
-		<Note from="60"/> <!-- Ride 1 Bow -->
-		<Note from="45"/> <!-- Ride 1 Bow Alternative -->
-		<Note from="62"/> <!-- Ride 1 Edge -->
-		<Note from="63"/> <!-- Ride 1 Stop Hand only -->
 	</Group>
 	<!-- Ride Bell -->
 	<Group to="53">
-		<Note from="61"/> <!-- Ride 1 Bell -->
-		<Note from="85"/> <!-- Ride 2 Bell -->
 	</Group>
 	<!-- Ride Cymbal 2 -->
 	<Group to="59">
-		<Note from="84"/> <!-- Ride 2 Bow -->
-		<Note from="86"/> <!-- Ride 2 Edge -->
-		<Note from="87"/> <!-- Ride 2 Stop Hand only -->
 	</Group>
 	<!-- Crash Cymbal 1 -->
 	<Group to="49">
-		<Note from="77"/> <!-- Cymbal Crash 1 Hit -->
-		<Note from="46"/> <!-- Cymbal Crash 1 Hit Alternative -->
-		<Note from="78"/> <!-- Cymbal Crash 1 Stop Hand only -->
-		<Note from="81"/> <!-- Cymbal Crash 3 Hit -->
-		<Note from="82"/> <!-- Cymbal Crash 3 Stop Hand only -->
-		<Note from="91"/> <!-- Cymbal Crash 5 Hit -->
-		<Note from="92"/> <!-- Cymbal Crash 5 Stop Hand only -->
 	</Group>
 	<!-- Crash Cymbal 2 -->
 	<Group to="57">
-		<Note from="79"/> <!-- Cymbal Crash 2 Hit -->
-		<Note from="80"/> <!-- Cymbal Crash 2 Stop Hand only -->
-		<Note from="89"/> <!-- Cymbal Crash 4 Hit -->
-		<Note from="90"/> <!-- Cymbal Crash 4 Stop Hand only -->
-		<Note from="93"/> <!-- Cymbal Crash 6 Hit -->
-		<Note from="94"/> <!-- Cymbal Crash 6 Stop Hand only -->
 	</Group>
 	<!-- Splash Cymbal -->
 	<Group to="55">
 	</Group>
 	<!-- China Cymbal -->
 	<Group to="52">
-		<Note from="91"/> <!-- Cymbal China 1 Hit -->
-		<Note from="92"/> <!-- Cymbal China 1 Stop Hand only -->
 	</Group>
 	
 	<!-- High Q -->
@@ -132,7 +78,6 @@
 	</Group>
 	<!-- Sticks -->
 	<Group to="31">
-		<Note from="75"/> <!-- Sticks -->
 	</Group>
 	<!-- Square Click -->
 	<Group to="32">
@@ -151,7 +96,6 @@
 	</Group>
 	<!-- Cowbell -->
 	<Group to="56">
-		<Note from="47"/> <!-- Cowbell -->
 	</Group>
 	<!-- Vibraslap -->
 	<Group to="58">

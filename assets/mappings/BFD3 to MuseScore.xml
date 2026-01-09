@@ -1,97 +1,262 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Map>
-	<!-- Kick 1 -->
-	<Note from="84" to="36"/> <!-- Kick Alternative -->
-	<Note from="24" to="36"/> <!-- Kick -->
-	<!-- Sidestick -->
-	<Note from="88" to="37"/> <!-- Snare Rim -->
-	<Note from="25" to="37"/> <!-- Snare Sidestick -->
-	<!-- Snare -->
-	<Note from="71" to="38"/> <!-- Ride 2 Bell -->
-	<Note from="28" to="38"/> <!-- Snare Hit Alternative -->
-	<Note from="27" to="38"/> <!-- Snare Ruff -->
-	<Note from="26" to="38"/> <!-- Snare Hit -->
-	<!-- Unknown 39 -->
-	<Note from="83" to="39"/> <!-- Clap -->
+	<!-- Bass Drum 1 -->
+	<Group to="36">
+		<Note from="24"/> <!-- Kick -->
+	</Group>
+	<!-- Bass Drum 2 -->
+	<Group to="35">
+		<Note from="84"/> <!-- Kick Alternative -->
+	</Group>
+	<!-- Acoustic Snare -->
+	<Group to="38">
+		<Note from="86"/> <!-- Snare Flam -->
+		<Note from="26"/> <!-- Snare Hit -->
+		<Note from="28"/> <!-- Snare Hit Alternative -->
+		<Note from="29"/> <!-- Snare Rimshot -->
+		<Note from="27"/> <!-- Snare Ruff -->
+	</Group>
 	<!-- Electric Snare -->
-	<Note from="29" to="40"/> <!-- Snare Rimshot -->
-	<!-- Low Floor Tom -->
-	<Note from="90" to="41"/> <!-- Floortom 2 Rim -->
-	<Note from="63" to="41"/> <!-- Floortom 2 Rimshot -->
-	<Note from="33" to="41"/> <!-- Floortom 2 Hit -->
+	<Group to="40">
+	</Group>
+	<!-- Side Stick -->
+	<Group to="37">
+		<Note from="25"/> <!-- Snare Sidestick -->
+		<Note from="88"/> <!-- Snare Rim -->
+	</Group>
 	<!-- Closed Hi-Hat -->
-	<Note from="58" to="42"/> <!-- Hi Hat Closed Bell -->
-	<Note from="37" to="42"/> <!-- Hi Hat Closed Edge -->
-	<Note from="30" to="42"/> <!-- Hi Hat Closed Tip -->
-	<Note from="22" to="42"/> <!-- Hi Hat Cc Bell -->
-	<Note from="20" to="42"/> <!-- Hi Hat Cc Edge -->
-	<Note from="18" to="42"/> <!-- Hi Hat Cc Tip -->
-	<!-- High Floor Tom (Generally: Floor Tom) -->
-	<Note from="92" to="43"/> <!-- Racktom 4 Rim -->
-	<Note from="89" to="43"/> <!-- Floortom 1 Rim -->
-	<Note from="68" to="43"/> <!-- Racktom 4 Rimshot -->
-	<Note from="61" to="43"/> <!-- Floortom 1 Rimshot -->
-	<Note from="36" to="43"/> <!-- Racktom 4 Hit -->
-	<Note from="31" to="43"/> <!-- Floortom 1 Hit -->
-	<!-- Pedal Hi-Hat -->
-	<Note from="56" to="44"/> <!-- Hi Hat Pedal Splash -->
-	<Note from="32" to="44"/> <!-- Hi Hat Pedal Close Foot -->
-	<!-- Low Tom -->
-	<Note from="91" to="45"/> <!-- Racktom 3 Rim -->
-	<Note from="66" to="45"/> <!-- Racktom 3 Rimshot -->
-	<Note from="35" to="45"/> <!-- Racktom 3 Hit -->
+	<Group to="42">
+		<Note from="22"/> <!-- Hi Hat Cc Bell -->
+		<Note from="20"/> <!-- Hi Hat Cc Edge -->
+		<Note from="18"/> <!-- Hi Hat Cc Tip -->
+		<Note from="58"/> <!-- Hi Hat Closed Bell -->
+		<Note from="37"/> <!-- Hi Hat Closed Edge -->
+		<Note from="30"/> <!-- Hi Hat Closed Tip -->
+	</Group>
 	<!-- Open Hi-Hat -->
-	<Note from="54" to="46"/> <!-- Hi Hat Open 2 Edge -->
-	<Note from="51" to="46"/> <!-- Hi Hat Open 2 Tip -->
-	<Note from="49" to="46"/> <!-- Hi Hat Open 1 Edge -->
-	<Note from="46" to="46"/> <!-- Hi Hat Open 1 Tip -->
-	<Note from="44" to="46"/> <!-- Hi Hat Loose Edge -->
-	<Note from="42" to="46"/> <!-- Hi Hat Loose Tip -->
-	<Note from="39" to="46"/> <!-- Hi Hat Open 3 Tip Alternative -->
-	<Note from="34" to="46"/> <!-- Hi Hat Open 3 Tip -->
-	<!-- Low Mid Tom (Generally: Low Tom) -->
-	<Note from="94" to="47"/> <!-- Racktom 2 Rim -->
-	<Note from="73" to="47"/> <!-- Racktom 2 Rimshot -->
-	<Note from="40" to="47"/> <!-- Racktom 2 Hit -->
-	<!-- High Mid Tom (Generally: High Tom) -->
-	<Note from="93" to="48"/> <!-- Racktom 1 Rim -->
-	<Note from="70" to="48"/> <!-- Racktom 1 Rimshot -->
-	<Note from="38" to="48"/> <!-- Racktom 1 Hit -->
-	<!-- Crash Cymbal Left -->
-	<Note from="85" to="49" velocity="1"/> <!-- Cymbal Crash 4 Stop Hand only -->
-	<Note from="79" to="49"/> <!-- Cymbal Crash 4 Hit -->
-	<Note from="75" to="49" velocity="1"/> <!-- Cymbal Crash 1 Stop Hand only -->
-	<Note from="72" to="49"/> <!-- Cymbal Crash 1 Hit -->
-	<Note from="69" to="49"/> <!-- Cymbal Crash 4 Bell -->
-	<Note from="62" to="49"/> <!-- Cymbal Crash 1 Bell -->
-	<Note from="59" to="49"/> <!-- Cymbal Crash 4 Bow -->
-	<Note from="52" to="49"/> <!-- Cymbal Crash 1 Bow Tip -->
-	<Note from="48" to="49"/> <!-- Cymbal Crash 4 Hit Alternative -->
-	<Note from="41" to="49"/> <!-- Cymbal Crash 1 Hit Alternative -->
+	<Group to="46">
+		<Note from="44"/> <!-- Hi Hat Loose Edge -->
+		<Note from="42"/> <!-- Hi Hat Loose Tip -->
+		<Note from="49"/> <!-- Hi Hat Open 1 Edge -->
+		<Note from="46"/> <!-- Hi Hat Open 1 Tip -->
+		<Note from="54"/> <!-- Hi Hat Open 2 Edge -->
+		<Note from="51"/> <!-- Hi Hat Open 2 Tip -->
+		<Note from="34"/> <!-- Hi Hat Open 3 Tip -->
+		<Note from="39"/> <!-- Hi Hat Open 3 Tip Alternative -->
+	</Group>
+	<!-- Pedal Hi-Hat -->
+	<Group to="44">
+		<Note from="32"/> <!-- Hi Hat Pedal Close Foot -->
+		<Note from="56"/> <!-- Hi Hat Pedal Splash -->
+	</Group>
+	<!-- High Tom -->
+	<Group to="50">
+		<Note from="38"/> <!-- Racktom 1 Hit -->
+		<Note from="93"/> <!-- Racktom 1 Rim -->
+		<Note from="70"/> <!-- Racktom 1 Rimshot -->
+	</Group>
+	<!-- Hi-Mid Tom -->
+	<Group to="48">
+		<Note from="40"/> <!-- Racktom 2 Hit -->
+		<Note from="94"/> <!-- Racktom 2 Rim -->
+		<Note from="73"/> <!-- Racktom 2 Rimshot -->
+	</Group>
+	<!-- Low-Mid Tom -->
+	<Group to="47">
+		<Note from="35"/> <!-- Racktom 3 Hit -->
+		<Note from="91"/> <!-- Racktom 3 Rim -->
+		<Note from="66"/> <!-- Racktom 3 Rimshot -->
+	</Group>
+	<!-- Low Tom -->
+	<Group to="45">
+		<Note from="36"/> <!-- Racktom 4 Hit -->
+		<Note from="92"/> <!-- Racktom 4 Rim -->
+		<Note from="68"/> <!-- Racktom 4 Rimshot -->
+	</Group>
+	<!-- High Floor Tom -->
+	<Group to="43">
+		<Note from="31"/> <!-- Floortom 1 Hit -->
+		<Note from="89"/> <!-- Floortom 1 Rim -->
+		<Note from="61"/> <!-- Floortom 1 Rimshot -->
+	</Group>
+	<!-- Low Floor Tom -->
+	<Group to="41">
+		<Note from="33"/> <!-- Floortom 2 Hit -->
+		<Note from="90"/> <!-- Floortom 2 Rim -->
+		<Note from="63"/> <!-- Floortom 2 Rimshot -->
+	</Group>
 	<!-- Ride Cymbal 1 -->
-	<Note from="87" to="51" velocity="1"/> <!-- Ride 2 Stop Hand only -->
-	<Note from="80" to="51" velocity="1"/> <!-- Ride 1 Stop Hand only -->
-	<Note from="60" to="51"/> <!-- Ride 2 Bow -->
-	<Note from="55" to="51"/> <!-- Ride 1 Bow -->
+	<Group to="51">
+		<Note from="55"/> <!-- Ride 1 Bow -->
+		<Note from="76"/> <!-- Ride 1 Edge -->
+		<Note from="45"/> <!-- Ride 1 Edge Alternative -->
+		<Note from="80"/> <!-- Ride 1 Stop Hand only -->
+	</Group>
 	<!-- Ride Bell -->
-	<Note from="71" to="53"/> <!-- Ride 2 Bell -->
-	<Note from="65" to="53"/> <!-- Ride 1 Bell -->
-	<!-- Cowbell -->
-	<Note from="95" to="56"/> <!-- Percussion Misc -->
-	<!-- Crash Cymbal Right -->
-	<Note from="82" to="57" velocity="1"/> <!-- Cymbal Crash 3 Stop Hand only -->
-	<Note from="78" to="57" velocity="1"/> <!-- Cymbal Crash 2 Stop Hand only -->
-	<Note from="77" to="57"/> <!-- Cymbal Crash 3 Hit -->
-	<Note from="74" to="57"/> <!-- Cymbal Crash 2 Hit -->
-	<Note from="67" to="57"/> <!-- Cymbal Crash 3 Bell -->
-	<Note from="64" to="57"/> <!-- Cymbal Crash 2 Bell -->
-	<Note from="57" to="57"/> <!-- Cymbal Crash 3 Bow -->
-	<Note from="53" to="57"/> <!-- Cymbal Crash 2 Bow Tip -->
-	<Note from="47" to="57"/> <!-- Cymbal Crash 3 Hit Alternative -->
-	<Note from="43" to="57"/> <!-- Cymbal Crash 2 Hit Alternative -->
+	<Group to="53">
+		<Note from="65"/> <!-- Ride 1 Bell -->
+		<Note from="71"/> <!-- Ride 2 Bell -->
+	</Group>
 	<!-- Ride Cymbal 2 -->
-	<Note from="81" to="59"/> <!-- Ride 2 Edge -->
-	<Note from="76" to="59"/> <!-- Ride 1 Edge -->
-	<Note from="50" to="59"/> <!-- Ride 2 Edge Alternative -->
-	<Note from="45" to="59"/> <!-- Ride 1 Edge Alternative -->
+	<Group to="59">
+		<Note from="60"/> <!-- Ride 2 Bow -->
+		<Note from="81"/> <!-- Ride 2 Edge -->
+		<Note from="50"/> <!-- Ride 2 Edge Alternative -->
+		<Note from="87"/> <!-- Ride 2 Stop Hand only -->
+	</Group>
+	<!-- Crash Cymbal 1 -->
+	<Group to="49">
+		<Note from="62"/> <!-- Cymbal Crash 1 Bell -->
+		<Note from="52"/> <!-- Cymbal Crash 1 Bow Tip -->
+		<Note from="72"/> <!-- Cymbal Crash 1 Hit -->
+		<Note from="41"/> <!-- Cymbal Crash 1 Hit Alternative -->
+		<Note from="75"/> <!-- Cymbal Crash 1 Stop Hand only -->
+		<Note from="67"/> <!-- Cymbal Crash 3 Bell -->
+		<Note from="57"/> <!-- Cymbal Crash 3 Bow -->
+		<Note from="77"/> <!-- Cymbal Crash 3 Hit -->
+		<Note from="47"/> <!-- Cymbal Crash 3 Hit Alternative -->
+		<Note from="82"/> <!-- Cymbal Crash 3 Stop Hand only -->
+	</Group>
+	<!-- Crash Cymbal 2 -->
+	<Group to="57">
+		<Note from="64"/> <!-- Cymbal Crash 2 Bell -->
+		<Note from="53"/> <!-- Cymbal Crash 2 Bow Tip -->
+		<Note from="74"/> <!-- Cymbal Crash 2 Hit -->
+		<Note from="43"/> <!-- Cymbal Crash 2 Hit Alternative -->
+		<Note from="78"/> <!-- Cymbal Crash 2 Stop Hand only -->
+		<Note from="69"/> <!-- Cymbal Crash 4 Bell -->
+		<Note from="59"/> <!-- Cymbal Crash 4 Bow -->
+		<Note from="79"/> <!-- Cymbal Crash 4 Hit -->
+		<Note from="48"/> <!-- Cymbal Crash 4 Hit Alternative -->
+		<Note from="85"/> <!-- Cymbal Crash 4 Stop Hand only -->
+	</Group>
+	<!-- Splash Cymbal -->
+	<Group to="55">
+	</Group>
+	<!-- China Cymbal -->
+	<Group to="52">
+	</Group>
+	
+	<!-- High Q -->
+	<Group to="27">
+	</Group>
+	<!-- Slap -->
+	<Group to="28">
+	</Group>
+	<!-- Scratch Push -->
+	<Group to="29">
+	</Group>
+	<!-- Scratch Pull -->
+	<Group to="30">
+	</Group>
+	<!-- Sticks -->
+	<Group to="31">
+	</Group>
+	<!-- Square Click -->
+	<Group to="32">
+	</Group>
+	<!-- Metronome Click -->
+	<Group to="33">
+	</Group>
+	<!-- Metronome Bell -->
+	<Group to="34">
+	</Group>
+	<!-- Hand Clap -->
+	<Group to="39">
+		<Note from="83"/> <!-- Clap -->
+	</Group>
+	<!-- Tambourine -->
+	<Group to="54">
+	</Group>
+	<!-- Cowbell -->
+	<Group to="56">
+		<Note from="95"/> <!-- Percussion Misc -->
+	</Group>
+	<!-- Vibraslap -->
+	<Group to="58">
+	</Group>
+	<!-- Hi Bongo -->
+	<Group to="60">
+	</Group>
+	<!-- Low Bongo -->
+	<Group to="61">
+	</Group>
+	<!-- Mute Hi Conga -->
+	<Group to="62">
+	</Group>
+	<!-- Open Hi Conga -->
+	<Group to="63">
+	</Group>
+	<!-- Low Conga -->
+	<Group to="64">
+	</Group>
+	<!-- High Timbale -->
+	<Group to="65">
+	</Group>
+	<!-- Low Timbale -->
+	<Group to="66">
+	</Group>
+	<!-- High Agogo -->
+	<Group to="67">
+	</Group>
+	<!-- Low Agogo -->
+	<Group to="68">
+	</Group>
+	<!-- Cabasa -->
+	<Group to="69">
+	</Group>
+	<!-- Maracas -->
+	<Group to="70">
+	</Group>
+	<!-- Short Whistle -->
+	<Group to="71">
+	</Group>
+	<!-- Long Whistle -->
+	<Group to="72">
+	</Group>
+	<!-- Short Guiro -->
+	<Group to="73">
+	</Group>
+	<!-- Long Guiro -->
+	<Group to="74">
+	</Group>
+	<!-- Claves -->
+	<Group to="75">
+	</Group>
+	<!-- High Wood Block -->
+	<Group to="76">
+	</Group>
+	<!-- Low Wood Block -->
+	<Group to="77">
+	</Group>
+	<!-- Mute Cuica -->
+	<Group to="78">
+	</Group>
+	<!-- Open Cuica -->
+	<Group to="79">
+	</Group>
+	<!-- Mute Triangle -->
+	<Group to="80">
+	</Group>
+	<!-- Open Triangle -->
+	<Group to="81">
+	</Group>
+	<!-- Shaker -->
+	<Group to="82">
+	</Group>
+	<!-- Sleigh Bell -->
+	<Group to="83">
+	</Group>
+	<!-- Mark Tree -->
+	<Group to="84">
+	</Group>
+	<!-- Castanets -->
+	<Group to="85">
+	</Group>
+	<!-- Mute Surdo -->
+	<Group to="86">
+	</Group>
+	<!-- Open Surdo -->
+	<Group to="87">
+	</Group>
 </Map>
