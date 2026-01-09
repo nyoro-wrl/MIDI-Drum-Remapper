@@ -7,6 +7,17 @@ By converting MIDI files with this software, they become MIDI files that follow 
 
 Internally, it only performs MIDI number remapping, so it can be used not only for scores but also for conversion between drum sound sources by writing a map definition file.
 
+## Usage
+
+1. Launch `MIDI Drum Remapper.exe`
+2. Select the combination of source and destination formats in the dropdown menu at the top. (e.g., Select `Addictive Drums 2 to MuseScore` when converting MIDI composed in Addictive Drums 2 for MuseScore.)
+3. (Optional) Open Output Settings to configure the output destination.
+    - `Output to same folder as input`: Sets the output destination to the same folder as the input file.
+    - `Output Dir`: Specifies the output folder.
+    - `File Name`: Specifies the output filename. `{filename}` is the input filename, `{ext}` is the extension.
+    - `Open folder after remapping`: Opens the output folder after conversion is complete.
+4. Drag and drop files to start the conversion automatically.
+
 ## About Map Definition Files
 
 Map definition files are placed as `.xml` files in the `mappings` directory.

@@ -7,6 +7,17 @@ DAWから出力したMIDIファイルは、そのままではドラムの仕様�
 
 内部的にはMIDI番号のリマップを行っているだけなので、楽譜用としてだけでなく、ドラム音源間の変換もマップ定義ファイルを書けば可能です。
 
+## 使い方
+
+1. `MIDI Drum Remapper.exe`を起動
+2. 一番上にある選択欄で変換元と変換先の組み合わせを選択します。（例: Addictive Drums 2で打ち込んだMIDIをMuseScore用に変換する場合は、`Addictive Drums 2 to MuseScore` を選択します。）
+3. （任意）Output Settingsを開いて出力先の設定を行います。
+    - `Output to same folder as input`: 出力先を入力ファイルと同じフォルダに設定します。
+    - `Output Dir`: 出力先のフォルダを指定します。
+    - `File Name`: 出力ファイル名を指定します。{filename}は入力ファイル名、{ext}は拡張子です。
+    - `Open folder after remapping`: 変換が完了した後、出力先のフォルダを開きます。
+4. ファイルをD&Dすると自動で変換が始まります。
+
 ## マップ定義ファイルについて
 
 マップ定義ファイルは`mappings`ディレクトリに`.xml`ファイルとして配置します。
