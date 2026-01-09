@@ -6,7 +6,7 @@ DAWで打ち込んだドラムMIDIファイルを、MuseScoreなどの楽譜ソ�
 
 ## インストール方法
 
-[Release](https://github.com/nyoro-wrl/MIDI-Drum-Remapper/releases) から `MIDI Drum Remapper.zip` をダウンロードして解凍してください。
+[Release](https://github.com/nyoro-wrl/MIDI-Drum-Remapper/releases) から `MidiDrumRemapper.zip` をダウンロードして解凍してください。
 
 ## 使用方法
 

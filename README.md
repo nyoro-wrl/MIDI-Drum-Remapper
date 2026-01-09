@@ -6,7 +6,7 @@ This is a conversion tool used to import drum MIDI files created in a DAW into s
 
 ## Installation
 
-Please download `MIDI Drum Remapper.zip` from [Release](https://github.com/nyoro-wrl/MIDI-Drum-Remapper/releases) and unzip it.
+Please download `MidiDrumRemapper.zip` from [Release](https://github.com/nyoro-wrl/MIDI-Drum-Remapper/releases) and unzip it.
 
 ## Usage
 
