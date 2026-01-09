@@ -2,6 +2,8 @@ English / [日本語](README_jp.md)
 
 # MIDI Drum Remapper
 
+![image](image.png)
+
 This is a conversion tool used to import drum MIDI files created in a DAW into score writing software like MuseScore **without issues**.
 
 ## Installation

@@ -2,6 +2,8 @@
 
 # MIDI Drum Remapper
 
+![image](image.png)
+
 DAWで打ち込んだドラムMIDIファイルを、MuseScoreなどの楽譜ソフトに **問題なく** インポートするために使う変換ソフトです。
 
 ## インストール方法
