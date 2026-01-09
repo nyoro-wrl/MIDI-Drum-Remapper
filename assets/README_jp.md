@@ -1,4 +1,4 @@
-# MIDI Drum MuseScore Remapper
+# MIDI Drum Remapper
 
 DAWで打ち込んだドラムMIDIファイルを、MuseScoreなどの楽譜ソフトに **問題なく** インポートするために使う変換ソフトです。
 

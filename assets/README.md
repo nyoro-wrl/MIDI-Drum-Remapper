@@ -1,4 +1,4 @@
-# MIDI Drum MuseScore Remapper
+# MIDI Drum Remapper
 
 This is a conversion software used to import drum MIDI files created in a DAW into score writing software like MuseScore **without issues**.
 
