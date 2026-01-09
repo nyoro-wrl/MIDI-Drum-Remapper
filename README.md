@@ -12,4 +12,4 @@ Please download `MidiDrumRemapper.zip` from [Release](https://github.com/nyoro-w
 
 ## Usage
 
-Please check [here](assets/README.md) or check `README_en.md` in the unzipped files.
+Please check [here](assets/README.md) or check `README.md` in the unzipped files.
