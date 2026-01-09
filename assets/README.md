@@ -10,7 +10,7 @@ Internally, it only performs MIDI number remapping, so it can be used not only f
 ## Usage
 
 1. Launch `MIDI Drum Remapper.exe`
-2. Select the combination of source and destination formats in the dropdown menu at the top. (e.g., Select `Addictive Drums 2 to MuseScore` when converting MIDI composed in Addictive Drums 2 for MuseScore.)
+2. Select the combination of source and destination formats in the dropdown menu at the top. (e.g., Select `Addictive Drums 2 to MuseScore` when converting MIDI composed in Addictive Drums 2 for MuseScore. If you simply want to convert to a drum MIDI file without remapping, select `as Source`.)
 3. (Optional) Open Output Settings to configure the output destination.
     - `Output to same folder as input`: Sets the output destination to the same folder as the input file.
     - `Output Dir`: Specifies the output folder.

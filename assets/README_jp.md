@@ -10,7 +10,7 @@ DAWから出力したMIDIファイルは、そのままではドラムの仕様�
 ## 使い方
 
 1. `MIDI Drum Remapper.exe`を起動
-2. 一番上にある選択欄で変換元と変換先の組み合わせを選択します。（例: Addictive Drums 2で打ち込んだMIDIをMuseScore用に変換する場合は、`Addictive Drums 2 to MuseScore` を選択します。）
+2. 一番上にある選択欄で変換元と変換先の組み合わせを選択します。（例: Addictive Drums 2で打ち込んだMIDIをMuseScore用に変換する場合は、`Addictive Drums 2 to MuseScore` を選択します。リマップせずに単にドラム用のMIDIファイルに変換したい場合は、`as Source` を選択します。）
 3. （任意）Output Settingsを開いて出力先の設定を行います。
     - `Output to same folder as input`: 出力先を入力ファイルと同じフォルダに設定します。
     - `Output Dir`: 出力先のフォルダを指定します。
