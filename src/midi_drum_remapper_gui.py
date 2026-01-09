@@ -330,7 +330,8 @@ class MidiDrumRemapperGUI(QMainWindow):
         self.load_config()
         
         # Set initial size and center
-        self.resize(500, 260)
+        self.resize(400, 260)
+        self.setFixedHeight(260)
         self.center()
     
     def center(self):

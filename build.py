@@ -29,17 +29,25 @@ def build():
         import shutil
         
         dist_dir = Path("dist")
-        mappings_src = Path("assets/mappings")
-        mappings_dst = dist_dir / "mappings"
+        assets_src = Path("assets")
         
-        if mappings_src.exists():
-            print(f"Copying assets from {mappings_src} to {mappings_dst}...")
-            if mappings_dst.exists():
-                shutil.rmtree(mappings_dst)
-            shutil.copytree(mappings_src, mappings_dst)
+        if assets_src.exists():
+            print(f"Copying assets from {assets_src} to {dist_dir}...")
+            for item in assets_src.iterdir():
+                dest = dist_dir / item.name
+                if dest.exists():
+                    if dest.is_dir():
+                        shutil.rmtree(dest)
+                    else:
+                        dest.unlink()
+                
+                if item.is_dir():
+                    shutil.copytree(item, dest)
+                else:
+                    shutil.copy2(item, dest)
             print("Assets copied successfully.")
         else:
-            print(f"Warning: Source mappings directory not found at {mappings_src}")
+            print(f"Warning: Assets directory not found at {assets_src}")
 
         print("\nExecutable is located in the 'dist' folder.")
         print("Required 'mappings' folder has been bundled next to the .exe file.")
